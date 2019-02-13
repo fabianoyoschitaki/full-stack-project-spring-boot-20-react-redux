@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Project {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotBlank(message="Project name is required")
@@ -44,6 +44,16 @@ public class Project {
 	
 	public Project() {
 		super();
+	}
+	
+	@PrePersist
+	protected void onCreate() {
+		this.createdAt = new Date();
+	}
+	
+	@PreUpdate
+	protected void onUpdate() {
+		this.updatedAt = new Date();
 	}
 	
 	public Long getId() {
@@ -108,15 +118,5 @@ public class Project {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-
-	@PrePersist
-	protected void onCreate() {
-		this.createdAt = new Date();
-	}
-	
-	@PreUpdate
-	protected void onUpdate() {
-		this.updatedAt = new Date();
 	}
 }
